@@ -1,0 +1,99 @@
+{
+  "db": "complaint_mgmt_db",
+  "cases": [
+    {
+      "name": "Track by reference number",
+      "index": "uq_complaints_reference",
+      "rows_returned": 1,
+      "with_index_ms": 0.503,
+      "without_index_ms": 2.754,
+      "speedup": 5.5,
+      "explain_with": {
+        "access_type": "const",
+        "key": "uq_complaints_reference",
+        "rows_examined": 1
+      },
+      "explain_without": {
+        "access_type": "ALL",
+        "key": null,
+        "rows_examined": 2958
+      }
+    },
+    {
+      "name": "Overdue complaints (Algorithm 3.4)",
+      "index": "idx_complaints_due",
+      "rows_returned": 29,
+      "with_index_ms": 0.646,
+      "without_index_ms": 1.546,
+      "speedup": 2.4,
+      "explain_with": {
+        "access_type": "range",
+        "key": "idx_complaints_due",
+        "rows_examined": 29
+      },
+      "explain_without": {
+        "access_type": "ALL",
+        "key": null,
+        "rows_examined": 2958
+      }
+    },
+    {
+      "name": "A customer's complaints",
+      "index": "idx_complaints_customer",
+      "rows_returned": 15,
+      "with_index_ms": 0.387,
+      "without_index_ms": 1.265,
+      "speedup": 3.3,
+      "explain_with": {
+        "access_type": "ref",
+        "key": "idx_complaints_customer",
+        "rows_examined": 15
+      },
+      "explain_without": {
+        "access_type": "ALL",
+        "key": null,
+        "rows_examined": 2958
+      }
+    },
+    {
+      "name": "Officer's open complaints",
+      "index": "idx_complaints_officer",
+      "rows_returned": 72,
+      "with_index_ms": 0.546,
+      "without_index_ms": 1.61,
+      "speedup": 3,
+      "explain_with": {
+        "access_type": "range",
+        "key": "idx_complaints_officer",
+        "rows_examined": 72
+      },
+      "explain_without": {
+        "access_type": "range",
+        "key": "idx_complaints_due",
+        "rows_examined": 778
+      }
+    },
+    {
+      "name": "Complaint history",
+      "index": "idx_updates_complaint",
+      "rows_returned": 5,
+      "with_index_ms": 0.21,
+      "without_index_ms": 5.97,
+      "speedup": 28.5,
+      "explain_with": {
+        "access_type": "ref",
+        "key": "idx_updates_complaint",
+        "rows_examined": 5
+      },
+      "explain_without": {
+        "access_type": "ALL",
+        "key": null,
+        "rows_examined": 13441
+      }
+    }
+  ],
+  "counts": {
+    "complaints": 3000,
+    "updates": 13441
+  }
+}

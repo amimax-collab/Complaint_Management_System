@@ -1,0 +1,114 @@
+[
+  {
+    "id": "TC-01",
+    "name": "Customer registration",
+    "input": "Valid name, e-mail and password",
+    "expected": "201; role customer; no password in response",
+    "actual": "201; role customer; password_hash in response: false",
+    "pass": true
+  },
+  {
+    "id": "TC-02",
+    "name": "Login with wrong and correct password",
+    "input": "Wrong password, then correct password",
+    "expected": "401 then 200",
+    "actual": "401 \"Invalid e-mail or password\" then 200 (role customer)",
+    "pass": true
+  },
+  {
+    "id": "TC-03",
+    "name": "Submit a complaint (Billing)",
+    "input": "Valid category, subject and description",
+    "expected": "201; reference CMP-YYYY-NNNNNN; due 48 hours later; status Submitted",
+    "actual": "201; CMP-2026-000001; due after 48 hours; status Submitted; priority High",
+    "pass": true
+  },
+  {
+    "id": "TC-04",
+    "name": "Submit with invalid input",
+    "input": "Subject of 3 characters",
+    "expected": "400 with a field message; nothing stored",
+    "actual": "400; [\"subject must be 5-150 characters\"]",
+    "pass": true
+  },
+  {
+    "id": "TC-05",
+    "name": "Track by reference number (owner)",
+    "input": "Reference CMP-2026-000001",
+    "expected": "200 with current status",
+    "actual": "200; status Submitted; category Billing",
+    "pass": true
+  },
+  {
+    "id": "TC-06",
+    "name": "Track another customer's complaint",
+    "input": "Same reference as a different customer",
+    "expected": "404 (existence not revealed)",
+    "actual": "404 \"Complaint not found\"",
+    "pass": true
+  },
+  {
+    "id": "TC-07",
+    "name": "Supervisor assigns with suggested officer",
+    "input": "No officer chosen",
+    "expected": "200; status Assigned; least-loaded officer",
+    "actual": "200; status Assigned; officer id 3 (expected 3)",
+    "pass": true
+  },
+  {
+    "id": "TC-08",
+    "name": "Skip a lifecycle stage",
+    "input": "Assigned to Resolved",
+    "expected": "409 transition not permitted",
+    "actual": "409 \"Transition from Assigned to Resolved is not permitted\"",
+    "pass": true
+  },
+  {
+    "id": "TC-09",
+    "name": "Officer resolves the complaint",
+    "input": "In Progress to Resolved with a note",
+    "expected": "200; status Resolved; resolved_at set",
+    "actual": "200; status Resolved; resolved_at set: true",
+    "pass": true
+  },
+  {
+    "id": "TC-10",
+    "name": "Customer gives feedback",
+    "input": "Rating 4 on a resolved complaint",
+    "expected": "201; complaint becomes Closed",
+    "actual": "201; status Closed; rating 4",
+    "pass": true
+  },
+  {
+    "id": "TC-11",
+    "name": "Escalation of an overdue complaint",
+    "input": "Complaint one hour past its due date; job run twice",
+    "expected": "Escalated once; second run escalates nothing",
+    "actual": "first run escalated 1, second run 0; is_escalated = 1",
+    "pass": true
+  },
+  {
+    "id": "TC-12",
+    "name": "SQL injection attempt",
+    "input": "Login with ' OR '1'='1 and a subject containing DROP TABLE",
+    "expected": "Login rejected (400 or 401); text stored as data; tables intact",
+    "actual": "login 400; complaint 201; stored subject \"x'); DROP TABLE users; --\"; users before 7, after 7",
+    "pass": true
+  },
+  {
+    "id": "TC-13",
+    "name": "Customer calls an administrator route",
+    "input": "GET /api/admin/users as a customer",
+    "expected": "403 and an ACCESS_DENIED audit record",
+    "actual": "403 \"Forbidden\"",
+    "pass": true
+  },
+  {
+    "id": "TC-14",
+    "name": "Mass assignment attempt",
+    "input": "Customer sends status, customer_id, assigned_officer_id and is_escalated",
+    "expected": "Extra fields ignored",
+    "actual": "status Submitted; owner is the logged-in customer: true; officer null; is_escalated 0",
+    "pass": true
+  }
+]

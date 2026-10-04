@@ -1,0 +1,158 @@
+{
+  "date": "2026-10-03T20:43:02.112Z",
+  "db": "complaint_mgmt_scale",
+  "results": [
+    {
+      "label": "POST /auth/login (Argon2id verification)",
+      "n": 30,
+      "mean": 165.15580613333336,
+      "median": 163.69011299999966,
+      "p95": 175.3687060000002,
+      "max": 176.19559400000026,
+      "errors": 0
+    },
+    {
+      "label": "GET /complaints (supervisor, first 25)",
+      "n": 200,
+      "mean": 88.93581413500009,
+      "median": 86.90340399999968,
+      "p95": 106.21002399999998,
+      "max": 133.01797599999918,
+      "errors": 0
+    },
+    {
+      "label": "GET /complaints?status=In Progress (supervisor)",
+      "n": 200,
+      "mean": 27.26854086499994,
+      "median": 25.89408199999889,
+      "p95": 36.820104999998875,
+      "max": 53.21035699999993,
+      "errors": 0
+    },
+    {
+      "label": "GET /complaints (customer, own complaints)",
+      "n": 200,
+      "mean": 2.6078261450001263,
+      "median": 1.9954579999975977,
+      "p95": 5.636654999998427,
+      "max": 18.812670999999682,
+      "errors": 0
+    },
+    {
+      "label": "GET /complaints (officer, assigned)",
+      "n": 200,
+      "mean": 15.68773972999994,
+      "median": 15.25091600000087,
+      "p95": 20.096466000002692,
+      "max": 34.95601700000407,
+      "errors": 0
+    },
+    {
+      "label": "GET /complaints/ref/:reference (track)",
+      "n": 200,
+      "mean": 2.841462444999488,
+      "median": 2.2887449999980163,
+      "p95": 6.951029000003473,
+      "max": 11.003701000001456,
+      "errors": 0
+    },
+    {
+      "label": "GET /complaints/:id (detail with history)",
+      "n": 200,
+      "mean": 2.7853346150003198,
+      "median": 2.1810960000002524,
+      "p95": 5.173899999994319,
+      "max": 38.60929299999407,
+      "errors": 0
+    },
+    {
+      "label": "POST /complaints (submit)",
+      "n": 100,
+      "mean": 9.865946950000216,
+      "median": 7.783405999995011,
+      "p95": 20.925042000002577,
+      "max": 38.53148299999884,
+      "errors": 0
+    },
+    {
+      "label": "GET /officers (workload and suggestion)",
+      "n": 100,
+      "mean": 70.21187389000013,
+      "median": 68.63283600000432,
+      "p95": 83.37677500000427,
+      "max": 100.58239500000491,
+      "errors": 0
+    },
+    {
+      "label": "GET /reports/summary (supervisor)",
+      "n": 100,
+      "mean": 386.94121672,
+      "median": 377.81862399999955,
+      "p95": 453.893250000001,
+      "max": 521.1323749999938,
+      "errors": 0
+    },
+    {
+      "label": "GET /admin/audit?limit=200",
+      "n": 100,
+      "mean": 2.2741975299998014,
+      "median": 1.815803000004962,
+      "p95": 4.3050729999959,
+      "max": 23.26375199999893,
+      "errors": 0
+    }
+  ],
+  "concurrency": [
+    {
+      "label": "Mixed read workload",
+      "total": 500,
+      "concurrency": 10,
+      "seconds": 24.15,
+      "throughput": 20.7,
+      "median": 818.36,
+      "p95": 1016.77,
+      "max": 1405.2,
+      "errors": 0
+    },
+    {
+      "label": "Mixed read workload",
+      "total": 500,
+      "concurrency": 25,
+      "seconds": 25.83,
+      "throughput": 19.36,
+      "median": 1076.35,
+      "p95": 2142.3,
+      "max": 2594.27,
+      "errors": 0
+    },
+    {
+      "label": "Mixed read workload",
+      "total": 500,
+      "concurrency": 50,
+      "seconds": 23.58,
+      "throughput": 21.2,
+      "median": 1996.64,
+      "p95": 3755.3,
+      "max": 4051.2,
+      "errors": 0
+    }
+  ],
+  "counts": {
+    "complaints": 100000,
+    "users": 5014,
+    "updates": 449100
+  },
+  "scheduler": {
+    "first": {
+      "escalated": 1009,
+      "autoClosed": 18850,
+      "ms": 39098.2
+    },
+    "second": {
+      "escalated": 0,
+      "autoClosed": 0,
+      "ms": 5.88
+    }
+  },
+  "memory_mb": 129.45
+}
